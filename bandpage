@@ -259,7 +259,7 @@
             
             <div class="portrait-container">
                 <!-- EDIT THIS: Upload band-portrait.jpg to your repo to display her picture -->
-                <img src="band-portrait.jpg" alt="Words of A Stranger Band Portrait">
+                <img src="WOAS.jpeg" alt="Words of A Stranger Band Portrait">
             </div>
 
             <p class="epigraph">“Curiouser and curiouser! Cried Alice...”</p>
