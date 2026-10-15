@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words of A Stranger</title>
+    
+    <!-- Google Fonts for Editorial & Literary Aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0d0f11;
+            --surface-color: #14171a;
+            --border-color: #262b30;
+            --text-primary: #e6e4df;
+            --text-secondary: #8c9298;
+            --accent-crimson: #7a1c1c;
+            --accent-gold: #c5a059;
+            --font-display: 'Cinzel', serif;
+            --font-body: 'Playfair Display', serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            padding: 40px 20px 80px;
+            max-width: 680px;
+            margin: 0 auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle Victorian/Bookish Border Frame around page */
+        .page-frame {
+            border: 1px solid var(--border-color);
+            padding: 36px 24px;
+            position: relative;
+            background-color: var(--surface-color);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-frame::before {
+            content: "";
+            position: absolute;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            pointer-events: none;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .band-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .portrait-container {
+            width: 100%;
+            height: 320px;
+            margin: 0 auto 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            filter: grayscale(80%) sepia(20%) contrast(110%);
+            transition: filter 0.5s ease;
+        }
+
+        .portrait-container:hover {
+            filter: grayscale(40%) sepia(10%) contrast(100%);
+        }
+
+        .portrait-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .epigraph {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Section Headings */
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* Audio Tracks Section */
+        .audio-section {
+            margin-bottom: 48px;
+        }
+
+        .track-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .track-card {
+            background: rgba(13, 15, 17, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .track-card:hover {
+            border-color: rgba(197, 160, 89, 0.4);
+        }
+
+        .track-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .track-number {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-crimson);
+            margin-right: 8px;
+        }
+
+        .track-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+        }
+
+        .track-duration {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        audio {
+            width: 100%;
+            height: 36px;
+            outline: none;
+            filter: invert(90%) hue-rotate(180deg) brightness(85%);
+            opacity: 0.8;
+        }
+
+        /* Personnel / Band Members Section */
+        .personnel-section {
+            margin-bottom: 40px;
+        }
+
+        .member-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .member-item {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid rgba(38, 43, 48, 0.5);
+            padding-bottom: 10px;
+        }
+
+        .member-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .member-role {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 48px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 24px;
+        }
+
+        .contact-link {
+            color: var(--accent-gold);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent-gold);
+        }
+
+        .contact-link:hover {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-frame">
+        
+        <!-- HEADER / BAND PORTRAIT -->
+        <header>
+            <h1 class="band-title">Words of A Stranger</h1>
+            <p class="tagline">Atmospheric & Literary Soundscapes</p>
+            
+            <div class="portrait-container">
+                <!-- EDIT THIS: Upload band-portrait.jpg to your repo to display her picture -->
+                <img src="band-portrait.jpg" alt="Words of A Stranger Band Portrait">
+            </div>
+
+            <p class="epigraph">“Curiouser and curiouser! Cried Alice...”</p>
+        </header>
+
+        <!-- AUDIO TRACKS SECTION -->
+        <main>
+            <section class="audio-section">
+                <div class="section-label">Selected Recordings</div>
+                
+                <div class="track-list">
+                    
+                    <!-- TRACK 1 -->
+                    <div class="track-card">
+                        <div class="track-meta">
+                            <div>
+                                <span class="track-number">01.</span>
+                                <span class="track-title">Rabbit Hole</span>
+                            </div>
+                            <span class="track-duration">4:12</span>
+                        </div>
+                        <!-- EDIT THIS: Upload rabbit-hole.mp3 to your repository -->
+                        <audio controls src="audio/rabbit-hole.mp3"></audio>
+                    </div>
+
+                    <!-- TRACK 2 -->
+                    <div class="track-card">
+                        <div class="track-meta">
+                            <div>
+                                <span class="track-number">02.</span>
+                                <span class="track-title">Aliens</span>
+                            </div>
+                            <span class="track-duration">3:48</span>
+                        </div>
+                        <!-- EDIT THIS: Upload aliens.mp3 to your repository -->
+                        <audio controls src="audio/aliens.mp3"></audio>
+                    </div>
+
+                    <!-- TRACK 3 -->
+                    <div class="track-card">
+                        <div class="track-meta">
+                            <div>
+                                <span class="track-number">03.</span>
+                                <span class="track-title">Tribal</span>
+                            </div>
+                            <span class="track-duration">5:05</span>
+                        </div>
+                        <!-- EDIT THIS: Upload tribal.mp3 to your repository -->
+                        <audio controls src="audio/tribal.mp3"></audio>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- BAND MEMBERS / PERSONNEL -->
+            <section class="personnel-section">
+                <div class="section-label">Dramatis Personae</div>
+                
+                <ul class="member-list">
+                    <li class="member-item">
+                        <span class="member-name">Cylia Queen</span>
+                        <span class="member-role">Songwriter</span>
+                    </li>
+                    <li class="member-item">
+                        <span class="member-name">Dave Javu</span>
+                        <span class="member-role">Drummer</span>
+                    </li>
+                    <li class="member-item">
+                        <span class="member-name">Chuck Charles</span>
+                        <span class="member-role">Producer, Multi-Instrumentalist, Sound Engineer, Web Developer, Property Owner</span>
+                    </li>
+                </ul>
+            </section>
+        <!-- LEWIS CARROLL FOOTER QUOTE -->
+        <blockquote class="footer-quote">
+            “We're all mad here.”
+            <cite>— Lewis Carroll, Alice’s Adventures in Wonderland</cite>
+        </blockquote>
+
+    </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>© <script>document.write(new Date().getFullYear())</script> Words of A Stranger. All rights reserved.</p>
+            <p style="margin-top: 8px;">Inquiries: <a href="mailto:wordsofastranger@myfatbutt.com" class="contact-link">contact@wordsofastranger.com</a></p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
